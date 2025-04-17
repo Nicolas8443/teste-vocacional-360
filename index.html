@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teste Vocacional.360</title>
+    <style>
+        body {
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            background: linear-gradient(120deg, #FFDEE9, #B5FFFC);
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+        .quiz-container {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+            max-width: 600px;
+            width: 100%;
+            text-align: center;
+        }
+        .logo {
+            display: block;
+            margin: 0 auto 15px auto;
+            max-width: 150px;
+        }
+        h1 {
+            text-align: center;
+            color: #ff69b4;
+            margin-bottom: 10px;
+        }
+        .question {
+            margin: 15px 0;
+            text-align: left;
+        }
+        .answers label {
+            display: block;
+            margin: 5px 0;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .answers label:hover {
+            color: #ff69b4;
+        }
+        button {
+            background: #ff69b4;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 10px;
+            cursor: pointer;
+            margin: 20px auto 10px auto;
+            display: block;
+            transition: 0.3s ease;
+        }
+        button:hover {
+            background: #ff1493;
+        }
+        .result {
+            text-align: center;
+            margin-top: 20px;
+            font-weight: bold;
+            font-size: 18px;
+            color: #333;
+            padding: 15px;
+            border: 2px dashed #ff69b4;
+            border-radius: 10px;
+            background: #ffe6f0;
+        }
+    </style>
+</head>
+<body>
+<div class="quiz-container">
+    <img src="Logo_Vocacional.360.png" alt="Vocacional.360 Logo" class="logo">
+    <h1>Teste Vocacional.360</h1>
+    <form id="quizForm">
+        <div class="question">
+            <p>1. Quais atividades você mais gosta de fazer no seu tempo livre?</p>
+            <div class="answers">
+                <label><input type="radio" name="q1" value="A"> Resolver problemas e desafios lógicos</label>
+                <label><input type="radio" name="q1" value="B"> Ajudar pessoas ou animais</label>
+                <label><input type="radio" name="q1" value="C"> Criar coisas novas, desenhar ou escrever</label>
+                <label><input type="radio" name="q1" value="D"> Trabalhar com números e organização</label>
+                <label><input type="radio" name="q1" value="E"> Liderar equipes ou tomar decisões</label>
+            </div>
+        </div>
+        <div class="question">
+            <p>2. Você prefere trabalhar:</p>
+            <div class="answers">
+                <label><input type="radio" name="q2" value="A"> Sozinho, focado em suas tarefas</label>
+                <label><input type="radio" name="q2" value="B"> Em grupo, trocando ideias e colaborando</label>
+                <label><input type="radio" name="q2" value="C"> Com supervisão clara e orientações precisas</label>
+                <label><input type="radio" name="q2" value="D"> De forma independente, tomando suas próprias decisões</label>
+            </div>
+        </div>
+        <div class="question">
+            <p>3. Qual dessas matérias escolares você mais gosta?</p>
+            <div class="answers">
+                <label><input type="radio" name="q3" value="A"> Matemática ou Física</label>
+                <label><input type="radio" name="q3" value="B"> Biologia ou Ciências</label>
+                <label><input type="radio" name="q3" value="C"> Arte ou Literatura</label>
+                <label><input type="radio" name="q3" value="D"> História ou Sociologia</label>
+                <label><input type="radio" name="q3" value="E"> Educação Física ou Esportes</label>
+            </div>
+        </div>
+        <button type="button" onclick="calcularResultado()">Ver Resultado</button>
+    </form>
+    <div id="resultado" class="result" style="display:none;"></div>
+    <button id="refazerBtn" style="display:none;" onclick="refazerTeste()">Refazer Teste</button>
+</div>
+<script>
+function calcularResultado() {
+    let respostas = document.querySelectorAll('input[type=radio]:checked');
+    let contagem = {A:0, B:0, C:0, D:0, E:0};
+    respostas.forEach((r) => contagem[r.value]++);
+    let perfil = Object.keys(contagem).reduce((a, b) => contagem[a] > contagem[b] ? a : b);
+    let mensagens = {
+        A: "\uD83D\uDCAA Perfil Técnico / Exatas: você tem talento para lógica, tecnologia e resolução de problemas! Considere áreas como Engenharia, TI, Arquitetura ou Ciências.",
+        B: "\u2764\uFE0F Perfil Humanitário / Saúde: você é empático e gosta de cuidar! Carreiras como Medicina, Psicologia, Enfermagem ou Educação combinam com você.",
+        C: "\uD83C\uDFA8 Perfil Criativo / Artes: você tem imaginação e gosta de inovar! Considere Design, Moda, Publicidade, Cinema ou Escrita.",
+        D: "\uD83D\uDCC5 Perfil Organizado / Administrativo: você gosta de planejamento! Administração, Contabilidade, Direito ou Gestão podem ser seu caminho.",
+        E: "\uD83D\uDE80 Perfil Empreendedor / Liderança: você tem iniciativa e visão de negócio! Áreas como Marketing, Gestão, Startups ou Empreendedorismo são ideais."
+    };
+    let resultadoDiv = document.getElementById('resultado');
+    resultadoDiv.style.display = 'block';
+    resultadoDiv.innerText = respostas.length ? mensagens[perfil] : "Responda todas as perguntas para ver seu perfil!";
+    document.getElementById('refazerBtn').style.display = 'inline-block';
+}
+function refazerTeste() {
+    document.getElementById('quizForm').reset();
+    document.getElementById('resultado').style.display = 'none';
+    document.getElementById('refazerBtn').style.display = 'none';
+}
+</script>
+</body>
+</html>
